@@ -1,12 +1,21 @@
+require('dotenv').config();
 const express = require('express');
-const bodyParser = require('body-parser');
+const cors = require('cors');
+const PORT = process.env.PORT || 3001;
+const router = require('./router');
 
-const { mongoose } = require('./db.js');
-let cardController = require('./controllers/cardController');
+const app = express();
 
-let app = express();
-app.use(bodyParser.json());
+app.use(cors());
+app.use(express.json());
+app.use(router);
 
-app.listen(3000, () => console.log('Server listening at port 3000'));
+app.get('*', (req,res) => {
+    res.status(404).send('Page not found');
+});
 
-app.use('/card', cardController)
+app.post('*', (req,res) => {
+    res.status(404).send('Page not found');
+});
+
+app.listen(PORT, () => console.log(`Server listening at port ${PORT}`));
