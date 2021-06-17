@@ -1,11 +1,11 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms'; 
+import { FormsModule } from '@angular/forms';
 import { NavBarComponent } from './components/nav-bar/nav-bar.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { HttpClientModule }    from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
 import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
-import { InMemoryDataService }  from './services/in-memory-data.service';
+import { InMemoryDataService } from './services/in-memory-data.service';
 import { AppRoutingModule } from './app-routing.module';
 
 // Components
@@ -39,7 +39,7 @@ import { SpinnerComponent } from './components/spinner/spinner.component';
     ),
     AppRoutingModule
   ],
-  
+
   providers: [],
   bootstrap: [AppComponent]
 })

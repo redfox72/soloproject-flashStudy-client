@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { HostListener } from "@angular/core";
+import { HostListener } from '@angular/core';
 
 @Injectable({
   providedIn: 'root'
@@ -12,17 +12,17 @@ export class UiServiceService {
   screenHeight: number;
   screenWidth: number;
 
-  constructor() { 
+  constructor() {
     this.getScreenSize();
   }
 
   toggleSidebar() {
-    this.sidebar.next(!this.sidebar.value)
+    this.sidebar.next(!this.sidebar.value);
   }
 
   hideMobile() {
-    if(this.screenWidth<768){
-      this.sidebar.next(true)
+    if (this.screenWidth < 768) {
+      this.sidebar.next(true);
     }
   }
 

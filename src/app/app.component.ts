@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 // Services
 import { QuizService } from './services/quiz.service';
 import { CategoryService } from './services/category.service';
-import { UiServiceService } from "./services/ui-service.service";
+import { UiServiceService } from './services/ui-service.service';
 
 // Model
 import { Category } from './model/category';
@@ -20,7 +20,7 @@ export class AppComponent implements OnInit {
   categories: Category[];
   quizzes: Quiz[];
   title = 'quiz-app';
-  toggle = "toggled"
+  toggle = 'toggled';
 
 
   constructor(
@@ -35,8 +35,8 @@ export class AppComponent implements OnInit {
 
     // Sidebar toggle
     this.uiService.sharedSidebar.subscribe(sidebar => {
-    this.toggle = sidebar ? "" : "toggled"
-    })
+      this.toggle = sidebar ? '' : 'toggled';
+    });
   }
 
 
@@ -44,7 +44,7 @@ export class AppComponent implements OnInit {
   getQuizzes(): void {
     this.quizService.getQuizzes()
       .subscribe(quizzes => {
-        this.quizzes = quizzes
+        this.quizzes = quizzes;
       });
   }
 
