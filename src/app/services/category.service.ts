@@ -14,10 +14,10 @@ export class CategoryService {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
   };
 
-  private url = 'api/categories';  
+  private url = 'api/categories';
 
   private cache: Category[] = [];
-  private observableCache: Observable<Category[]>
+  private observableCache: Observable<Category[]>;
 
   constructor(private http: HttpClient) { }
 
@@ -35,18 +35,18 @@ export class CategoryService {
       this.observableCache = this.http.get<Category[]>(this.url).pipe(
         map((rawData) => this.mapCachedCategories(rawData)),
         catchError(this.handleError<Category[]>(`getQuizzes`)),
-        share())
+        share());
     }
     return this.observableCache;
   }
 
   getCategory(id: string): Observable<Category> {
-    return this.getCategories().pipe(map(categories => categories.filter(cat => cat.id == parseInt(id))[0]));
+    return this.getCategories().pipe(map(categories => categories.filter(cat => cat.id === parseInt(id, 10))[0]));
   }
 
   private mapCachedCategories(body: Category[]) {
     this.observableCache = null;
-    this.cache = body
+    this.cache = body;
     return this.cache;
   }
 

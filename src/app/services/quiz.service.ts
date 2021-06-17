@@ -16,7 +16,7 @@ export class QuizService {
   private url = 'api/quizzes';
 
   private quizzCache: Quiz[] = [];
-  private observableCache: Observable<Quiz[]>
+  private observableCache: Observable<Quiz[]>;
 
 
   constructor(
@@ -25,35 +25,35 @@ export class QuizService {
 
   getQuizzes(): Observable<Quiz[]> {
     if (this.quizzCache.length > 0) {
-      console.log("**** Quizzes from cache ****")
+      console.log('**** Quizzes from cache ****');
       return of(this.quizzCache);
     } else if (this.observableCache) {
       // Request pending
       return this.observableCache;
     } else {
       // New request needed
-      console.log("**** Fetching quizzess ****")
+      console.log('**** Fetching quizzess ****');
       this.observableCache = this.http.get<Quiz[]>(this.url).pipe(
         map((rawData) => this.mapCachedQuizzes(rawData)),
         catchError(this.handleError<Quiz[]>(`getQuizzes`)),
-        share())
+        share());
     }
     return this.observableCache;
   }
 
   getQuizzesByCategory(catID: string): Observable<Quiz[]> {
-    return this.getQuizzes().pipe(map(quizzes => quizzes.filter(quiz => quiz.catID === parseInt(catID))));
+    return this.getQuizzes().pipe(map(quizzes => quizzes.filter(quiz => quiz.catID === parseInt(catID, 10))));
   }
 
 
   getQuiz(id: number): Observable<Quiz> {
-    return this.getQuizzes().pipe(map(quizzes => quizzes.filter(quiz => quiz.id == id)[0]));
+    return this.getQuizzes().pipe(map(quizzes => quizzes.filter(quiz => quiz.id === id)[0]));
   }
 
 
   private mapCachedQuizzes(body: Quiz[]) {
     this.observableCache = null;
-    this.quizzCache = body
+    this.quizzCache = body;
     return this.quizzCache;
   }
 
