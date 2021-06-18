@@ -71,7 +71,7 @@ export class QuizComponent implements OnInit {
 
 
   // get Questions
-  getQuestions(quizID: number): void {
+  getQuestions(quizID: string): void {
     this.questionService.getQuestionsByQuiz(quizID)
       .subscribe(questions => {
         this.questions = questions;
@@ -83,7 +83,7 @@ export class QuizComponent implements OnInit {
   }
 
   // get Quiz
-  getQuiz(id: number): void {
+  getQuiz(id: string): void {
     this.quizService.getQuiz(id)
       .subscribe(quiz => {
         this.quiz = quiz;
@@ -119,9 +119,9 @@ export class QuizComponent implements OnInit {
       this.pause = false;
     } else {
       if (this.success) {
-        if (!this.player.completed.includes(this.quiz.id)) {
+        if (!this.player.completed.includes(this.quiz._id)) {
           console.log('Updating score');
-          this.player.completed.push(this.quiz.id);
+          this.player.completed.push(this.quiz._id);
           this.updateScore();
         }
         // Update quizz to completed

@@ -1,0 +1,11 @@
+<div class="log-in">
+  <form>
+  <label for="email">Email</label>
+  <input type="text" id="email" [formControl]="email">
+  <label for="password">Password</label>
+  <input type="password" id="password" [formControl]="password">
+  <p *ngIf="loginError !== ''">{{ loginError }}</p>
+  <button [disabled]="email.value === '' || password.value === ''" (click)="attemptLogin()">Log in</button>
+  <button (click)="changeToRegister()">New User?</button>
+  </form>
+</div>

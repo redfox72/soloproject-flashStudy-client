@@ -2,7 +2,7 @@
 
 <div *ngIf="categories" class="bg-light border-right" id="sidebar-wrapper">
 
-  <a [routerLink]="['/category', 1 ]">
+  <a [routerLink]="['/category', categories[0]._id ]">
     <div class="sidebar-heading"> Flash Trivia</div>
   </a>
 
@@ -14,7 +14,7 @@
   <div *ngFor='let cat of categories; index as i;' class="list-group list-group-flush">
 
 
-    <a [routerLink]="['/category', cat.id ]" (click)="closeSidebar()" href="#" [ngClass]="selectedCategory.id === cat.id? 'selected':'' "
+    <a [routerLink]="['/category', cat._id ]" (click)="closeSidebar()" href="#" [ngClass]="selectedCategory._id === cat._id? 'selected':'' "
       class="list-group-item list-group-item-action bg-light">
       {{cat.title}}
     </a>
@@ -26,11 +26,12 @@
     <!-- Settings -->
     <div class="list-group list-group-flush">
 
-
+    <!--
       <a  (click)="resetScore()" class="list-group-item list-group-item-action bg-light sidebar-button"> 
         <fa-icon [icon]="settingsIcon[0]"></fa-icon>
         Reset (Reload current Page)
       </a>
+    -->
 
       <a (click)="showInfo()" class="list-group-item list-group-item-action bg-light sidebar-button"> 
         <fa-icon [icon]="settingsIcon[1]"></fa-icon>
@@ -40,6 +41,7 @@
       <div class="alert alert-info" role="alert" [ngClass]="toggleInfo?'': 'hidden'">
         A link to my github
       </div>
+      <a (click)="logout()" class="list-group-item list-group-item-action bg-light sidebar-button">Log out</a>
   
     </div>
 

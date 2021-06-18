@@ -3,6 +3,7 @@ import { Observable, of } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { catchError, tap } from 'rxjs/operators';
 import { Player } from '../model/player';
+import { AuthenticationService } from '../authentication.service';
 
 
 @Injectable({
@@ -13,14 +14,18 @@ export class PlayerService {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
   };
 
-  private url = 'api/players';
+  private url = 'http://localhost:4000/players';
 
-  constructor(private http: HttpClient) { }
+  constructor(
+    private http: HttpClient,
+    private authService: AuthenticationService) { }
 
 
   getPlayer(id: string): Observable<Player> {
     const url = `${this.url}/${id}`;
-    return this.http.get<Player>(url).pipe(
+    return this.http.get<Player>(url, {
+      headers: new HttpHeaders({Authorization: `Bearer: ${this.authService.getToken().value}`})
+    }).pipe(
       tap(_ => console.log(`fetched Player id=${id}`)),
       catchError(this.handleError<Player>(`getPlayer id=${id}`))
     );
@@ -29,7 +34,7 @@ export class PlayerService {
   /** PUT:  */
   updatePlayer(player: Player): Observable<any> {
     return this.http.put(this.url, player, this.httpOptions).pipe(
-      tap(_ => console.log(`updated player id=${player.id}`)),
+      tap(_ => console.log(`updated player id=${player._id}`)),
       catchError(this.handleError<any>('updatePlayer'))
     );
   }

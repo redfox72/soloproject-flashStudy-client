@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { faTree, faGlobeEurope, faTrash, faInfo} from '@fortawesome/free-solid-svg-icons';
+import { AuthenticationService } from 'src/app/authentication.service';
 import { Category } from '../../model/category';
 import { Quiz } from '../../model/quiz';
 import { UiServiceService } from '../../services/ui-service.service';
@@ -23,7 +24,8 @@ export class SideBarComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private uiService: UiServiceService
+    private uiService: UiServiceService,
+    private authService: AuthenticationService
   ) { }
 
   ngOnInit(): void {
@@ -42,6 +44,10 @@ export class SideBarComponent implements OnInit {
     window.location.reload();
   }
 
+  logout(): void {
+    this.authService.attemptLogout();
+  }
+
   showInfo() {
     this.toggleInfo = !this.toggleInfo;
   }
@@ -52,22 +58,32 @@ export class SideBarComponent implements OnInit {
 
 
   setNavBarContent() {
-    const path = this.router.parseUrl(this.router.url).root.children.primary.segments[0].path;
-    const id = this.router.parseUrl(this.router.url).root.children.primary.segments[1].path;
+    const parsedUrl = this.router.parseUrl(this.router.url);
+    let path: string;
+    let id: string;
+    console.log(this.categories);
+    if (parsedUrl.root.children.primary) {
+      path = parsedUrl.root.children.primary.segments[0].path;
+      id = parsedUrl.root.children.primary.segments[1].path;
+    }
+    else {
+      path = 'category';
+      id = this.categories[0]._id;
+    }
     if (path === 'category') {
-      this.setSelectedCategory(parseInt(id, 10));
+      this.setSelectedCategory(id);
     } else if (path === 'quiz') {
       if (this.quizzes) {
-        const catID = this.quizzes.find(q => q.id === parseInt(id, 10)).catID;
+        const catID = this.quizzes.find(q => q._id === id, 10).catID;
         this.setSelectedCategory(catID);
       }
     }
   }
 
 
-  setSelectedCategory(id: number) {
+  setSelectedCategory(id: string) {
     if (this.categories) {
-      this.selectedCategory = this.categories.find(i => i.id === id);
+      this.selectedCategory = this.categories.find(i => i._id === id);
     }
   }
 

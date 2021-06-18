@@ -1,8 +1,8 @@
 
 
 export interface Player {
-    id: number;
-    completed: number[];
+    _id: string;
+    completed: string[];
 }
 
 

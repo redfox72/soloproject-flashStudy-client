@@ -5,7 +5,6 @@ import { CategoryComponent } from './components/category/category.component';
 
 
 const routes: Routes = [
-  { path: '', redirectTo: '/category/1', pathMatch: 'full' },
 
   { path: 'quiz', component: QuizComponent },
   { path: 'quiz/:id', component: QuizComponent },
