@@ -12,12 +12,12 @@ export class QuestionService {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
   };
 
-  private url = 'api/questions';
+  private url = 'http://localhost:4000/questions';
 
   constructor( private http: HttpClient) { }
 
 
-  getQuestionsByQuiz(quizID: number): Observable<Question[]> {
+  getQuestionsByQuiz(quizID: string): Observable<Question[]> {
 
     const params = new HttpParams().set('quizID', '' + quizID);
 

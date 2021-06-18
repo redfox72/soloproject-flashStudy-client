@@ -1,4 +1,8 @@
-<div *ngIf="quizzes && categories" [ngClass]="'toggle'" class="d-flex" id="wrapper">
+<div *ngIf="!authenticated">
+  <app-log-in *ngIf="useLogin"></app-log-in>
+  <app-register *ngIf="!useLogin"></app-register>
+</div>
+<div *ngIf="quizzes && categories && authenticated" [ngClass]="'toggle'" class="d-flex" id="wrapper">
 
   <!-- Sidebar -->
 

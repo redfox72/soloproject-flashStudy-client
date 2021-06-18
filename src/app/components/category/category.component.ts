@@ -75,6 +75,6 @@ export class CategoryComponent implements OnInit {
 
   // Calculate progress
   updateProgress(): void{
-    this.progress = (this.quizzes.filter(q => this.player.completed.includes(q.id)).length / this.quizzes.length) * 100;
+    this.progress = (this.quizzes.filter(q => this.player.completed.includes(q._id)).length / this.quizzes.length) * 100;
   }
 }

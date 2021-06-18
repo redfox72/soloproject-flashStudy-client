@@ -1,6 +1,6 @@
 
 export interface Category {
-    id: number;
+    _id: string;
     title: string;
 }
 

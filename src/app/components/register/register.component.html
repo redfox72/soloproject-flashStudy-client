@@ -1,0 +1,15 @@
+<div class="register">
+  <form>
+  <label for="email">Email</label>
+  <input type="text" id="email" [formControl]="email">
+  <label for="password">Password</label>
+  <input type="password" id="password" [formControl]="password">
+  <label for="firstName">First Name</label>
+  <input type="text" id="firstName" [formControl]="firstName">
+  <label for="lastName">Last Name</label>
+  <input type="text" id="lastName" [formControl]="lastName">
+  <p *ngIf="registerError !== ''">{{ registerError }}</p>
+  <button [disabled]="email.value === '' || password.value === '' || firstName.value === '' || lastName.value === ''" (click)="attemptRegister()">Register</button>
+  <button (click)="changeToLogin()">Current User?</button>
+  </form>
+</div>
