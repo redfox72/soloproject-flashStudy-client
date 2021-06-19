@@ -8,7 +8,7 @@ export interface QuizData {
 }
 
 const quizSchema = new Schema<QuizData>({
-  categoeyId: {
+  categoryId: {
     type: Schema.Types.ObjectId, ref: 'Categories',
     required: true,
   },
