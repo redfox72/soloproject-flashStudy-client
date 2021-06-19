@@ -20,12 +20,12 @@ import { Player } from '../../model/player';
 export class CategoryComponent implements OnInit {
 
   // Icons
-  icons = [faSquare, faCheck]
+  icons = [faSquare, faCheck];
   categories: Category[];
   quizzes: Quiz[];
   selectedCategory: Category;
   progress: number;
-  player: Player
+  player: Player;
 
 
 
@@ -42,7 +42,7 @@ export class CategoryComponent implements OnInit {
     this.route.params.subscribe(routeParams => {
       this.getQuizzes(routeParams.id);
       this.getCategory(routeParams.id);
-      this.getPlayer("1");
+      this.getPlayer('1');
     });
 
   }
@@ -51,8 +51,8 @@ export class CategoryComponent implements OnInit {
   getPlayer(id: string): void {
     this.playerService.getPlayer(id)
       .subscribe(player => {
-        this.player = player
-        this.updateProgress()
+        this.player = player;
+        this.updateProgress();
       });
   }
 
@@ -60,8 +60,7 @@ export class CategoryComponent implements OnInit {
   getQuizzes(id: string): void {
     this.quizService.getQuizzesByCategory(id)
       .subscribe(quizzes => {
-        this.quizzes = quizzes
-        
+        this.quizzes = quizzes;
       });
   }
 
@@ -76,7 +75,6 @@ export class CategoryComponent implements OnInit {
 
   // Calculate progress
   updateProgress(): void{
-    this.progress = (this.quizzes.filter(q=>this.player.completed.includes(q.id)).length/this.quizzes.length)*100  
+    this.progress = (this.quizzes.filter(q => this.player.completed.includes(q._id)).length / this.quizzes.length) * 100;
   }
-
 }
