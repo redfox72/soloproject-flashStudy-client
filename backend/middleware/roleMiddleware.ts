@@ -8,6 +8,6 @@ export const roleMiddleware = async (req: Request, res: Response, next: NextFunc
       res.sendStatus(403);    
     }
   } catch (error) {
-    res.sendStatus(403);    
+    res.sendStatus(500);    
   }
 };

@@ -2,7 +2,7 @@ import { Router } from 'express';
 import { create, login, profile, logout } from './controllers/userController';
 import { getAllCategories, addCategory } from './controllers/categoryController';
 import { getAllQuizzes, addQuiz, getQuizById } from './controllers/quizController';
-import { getAllQuestions, addQuestion, getQuestionById } from './controllers/questionController';
+import { getAllQuestions, addQuestion, getQuestionById, getBulkQuestions } from './controllers/questionController';
 import { authMiddleware } from './middleware/authMiddleware';
 import { roleMiddleware } from './middleware/roleMiddleware';
 import { checkPlayer } from './controllers/playerController';
@@ -25,6 +25,7 @@ router.get('/quizzes/:id', authMiddleware, getQuizById);
 router.get('/questions', authMiddleware, getAllQuestions);
 router.post('/questions', authMiddleware, addQuestion);
 router.get('/questions/:id', authMiddleware, getQuestionById);
+router.post('/questions/bulk', authMiddleware, getBulkQuestions);
 
 router.get('/players/:id', authMiddleware, checkPlayer);
 

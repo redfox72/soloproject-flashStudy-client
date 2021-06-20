@@ -6,7 +6,7 @@ export const getAllCategories = async (req: Request, res: Response): Promise<voi
     const allCategories = await Categories.find();
     res.status(200).send(allCategories);
   } catch (error) {
-    res.status(404).send({ error });
+    res.status(500).send({ error });
   }
 };
 
@@ -15,6 +15,6 @@ export const addCategory = async (req: Request, res: Response): Promise<void> =>
     const newCategory = await Categories.create(req.body); 
     res.status(201).send(newCategory._id);
   } catch (error) {
-    res.status(404).send({ error });
+    res.status(500).send({ error });
   }
 };
