@@ -5,7 +5,7 @@ import { getAllQuizzes, addQuiz, getQuizById } from './controllers/quizControlle
 import { getAllQuestions, addQuestion, getQuestionById, getBulkQuestions } from './controllers/questionController';
 import { authMiddleware } from './middleware/authMiddleware';
 import { roleMiddleware } from './middleware/roleMiddleware';
-import { checkPlayer } from './controllers/playerController';
+import { checkPlayer, updateCompletedQuiz } from './controllers/playerController';
 import { addUserToAdmin } from './controllers/adminController';
 
 const router = Router();
@@ -28,6 +28,7 @@ router.get('/questions/:id', authMiddleware, getQuestionById);
 router.post('/questions/bulk', authMiddleware, getBulkQuestions);
 
 router.get('/players/:id', authMiddleware, checkPlayer);
+router.put('/player/completed', authMiddleware, updateCompletedQuiz);
 
 router.put('/admin/:id', authMiddleware, roleMiddleware, addUserToAdmin);
 
