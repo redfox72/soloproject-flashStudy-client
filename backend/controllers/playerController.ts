@@ -15,3 +15,12 @@ export const checkPlayer = async (req: Request, res: Response): Promise<void> =>
     res.status(500).send({ error });
   }
 };
+
+export const updateCompletedQuiz = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const updatePlayerCompletedQuiz = await Players.findOneAndUpdate( {_id: req.body._id}, {completed: req.body.completed} );
+    res.status(200).send(updatePlayerCompletedQuiz);
+  } catch (error) {
+    res.status(500).send({ error })
+  }
+};
