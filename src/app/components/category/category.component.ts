@@ -11,6 +11,7 @@ import { PlayerService } from '../../services/player.service';
 import { Category } from '../../model/category';
 import { Quiz } from '../../model/quiz';
 import { Player } from '../../model/player';
+import { AuthenticationService } from 'src/app/authentication.service';
 
 @Component({
   selector: 'app-category',
@@ -34,7 +35,7 @@ export class CategoryComponent implements OnInit {
     private quizService: QuizService,
     private categoryService: CategoryService,
     private playerService: PlayerService,
-
+    private authService: AuthenticationService
   ) { }
 
   ngOnInit(): void {
@@ -42,13 +43,14 @@ export class CategoryComponent implements OnInit {
     this.route.params.subscribe(routeParams => {
       this.getQuizzes(routeParams.id);
       this.getCategory(routeParams.id);
-      this.getPlayer('1');
+      this.getPlayer(this.authService.getUserID().value);
     });
 
   }
 
   // Get player
   getPlayer(id: string): void {
+    console.log('Getting players by ', id);
     this.playerService.getPlayer(id)
       .subscribe(player => {
         this.player = player;
@@ -58,8 +60,10 @@ export class CategoryComponent implements OnInit {
 
   // Get quizzes
   getQuizzes(id: string): void {
+    console.log('Getting quizzes by ', id);
     this.quizService.getQuizzesByCategory(id)
       .subscribe(quizzes => {
+        console.log('quizzes are ', quizzes);
         this.quizzes = quizzes;
       });
   }

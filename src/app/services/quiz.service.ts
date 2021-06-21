@@ -37,7 +37,9 @@ export class QuizService {
   }
 
   getQuizzesByCategory(catID: string): Observable<Quiz[]> {
-    return this.getQuizzes().pipe(map(quizzes => quizzes.filter(quiz => quiz.catID === catID)));
+    return this.getQuizzes().pipe(map(quizzes => {
+      return quizzes.filter(quiz => quiz.categoryId === catID);
+    }));
   }
 
 

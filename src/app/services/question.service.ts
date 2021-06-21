@@ -3,25 +3,27 @@ import { Question } from '../model/question';
 import { Observable, of } from 'rxjs';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { catchError, tap } from 'rxjs/operators';
+import { AuthenticationService } from '../authentication.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class QuestionService {
-  httpOptions = {
-    headers: new HttpHeaders({ 'Content-Type': 'application/json' })
-  };
 
-  private url = 'http://localhost:4000/questions';
+  private url = 'http://localhost:4000/questions/bulk';
 
-  constructor( private http: HttpClient) { }
+  constructor(
+    private http: HttpClient,
+    private authService: AuthenticationService) { }
 
 
-  getQuestionsByQuiz(quizID: string): Observable<Question[]> {
+  getQuestionsByQuiz(questionIds: string[]): Observable<Question[]> {
 
-    const params = new HttpParams().set('quizID', '' + quizID);
-
-    return this.http.get<Question[]>(this.url, { params })
+    return this.http.post<Question[]>(this.url, {questions: questionIds}, { headers: new HttpHeaders({
+       'Content-Type': 'application/json',
+        Authorization: `Bearer: ${this.authService.getToken().value}`
+       }
+    ) })
       .pipe(tap(_ => console.log('fetched Question')),
         catchError(this.handleError<Question[]>('getQuestions', []))
       );

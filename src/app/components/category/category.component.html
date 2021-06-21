@@ -12,7 +12,7 @@
 
       <!-- Quiz items -->
       <div *ngFor='let q of quizzes' class="col-lg-6">
-        <div [routerLink]="['/quiz', q.id ]" href="#" id="quiz-item"
+        <div [routerLink]="['/quiz', q._id ]" href="#" id="quiz-item"
           class="list-group-item list-group-item-action"
           [ngClass]="player.completed.includes(q.id)? 'bg-success2':'bg-primary2' "
           >

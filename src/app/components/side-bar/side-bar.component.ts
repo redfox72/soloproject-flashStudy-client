@@ -62,19 +62,22 @@ export class SideBarComponent implements OnInit {
     let path: string;
     let id: string;
     console.log(this.categories);
+    console.log(this.quizzes);
     if (parsedUrl.root.children.primary) {
       path = parsedUrl.root.children.primary.segments[0].path;
       id = parsedUrl.root.children.primary.segments[1].path;
     }
     else {
-      path = 'category';
-      id = this.categories[0]._id;
+      this.router.navigate(['category', this.categories[0]._id]);
     }
     if (path === 'category') {
       this.setSelectedCategory(id);
     } else if (path === 'quiz') {
+      console.log(id);
+      console.log('Selected category is ', this.selectedCategory);
+      console.log(this.quizzes);
       if (this.quizzes) {
-        const catID = this.quizzes.find(q => q._id === id, 10).catID;
+        const catID = this.quizzes.find(q => q.categoryId === id).categoryId;
         this.setSelectedCategory(catID);
       }
     }
