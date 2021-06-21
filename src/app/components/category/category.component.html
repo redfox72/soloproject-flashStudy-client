@@ -14,7 +14,7 @@
       <div *ngFor='let q of quizzes' class="col-lg-6">
         <div [routerLink]="['/quiz', q._id ]" href="#" id="quiz-item"
           class="list-group-item list-group-item-action"
-          [ngClass]="player.completed.includes(q.id)? 'bg-success2':'bg-primary2' "
+          [ngClass]="player.completed.includes(q._id)? 'bg-success2':'bg-primary2' "
           >
 
           <h4 class="card-text">{{q.name}} </h4>

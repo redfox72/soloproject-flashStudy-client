@@ -15,6 +15,7 @@ export class PlayerService {
   };
 
   private url = 'http://localhost:4000/players';
+  private updateUrl = 'http://localhost:4000/player/completed'
 
   constructor(
     private http: HttpClient,
@@ -33,7 +34,10 @@ export class PlayerService {
 
   /** PUT:  */
   updatePlayer(player: Player): Observable<any> {
-    return this.http.put(this.url, player, this.httpOptions).pipe(
+    console.log(player);
+    return this.http.put(this.updateUrl, player, {
+      headers: new HttpHeaders({ 'Content-Type': 'application/json' , Authorization: `Bearer: ${this.authService.getToken().value}`})
+    }).pipe(
       tap(_ => console.log(`updated player id=${player._id}`)),
       catchError(this.handleError<any>('updatePlayer'))
     );
