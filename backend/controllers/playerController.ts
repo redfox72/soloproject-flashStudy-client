@@ -1,4 +1,4 @@
-import { Request, Response } from 'express';
+import { Request, Response } from 'express'
 import Players from '../models/players';
 
 export const checkPlayer = async (req: Request, res: Response): Promise<void> => {
@@ -11,6 +11,7 @@ export const checkPlayer = async (req: Request, res: Response): Promise<void> =>
       res.status(201).send(newPlayer);
     }
   } catch (error) {
+    console.log(error);
     res.status(500).send({ error });
   }
 };

@@ -12,6 +12,7 @@ import { PlayerService } from '../../services/player.service';
 import { Quiz } from '../../model/quiz';
 import { Question } from '../../model/question';
 import { Player } from '../../model/player';
+import { AuthenticationService } from 'src/app/authentication.service';
 
 
 
@@ -44,11 +45,12 @@ export class QuizComponent implements OnInit {
     private questionService: QuestionService,
     private quizService: QuizService,
     private playerService: PlayerService,
-    private location: Location
+    private location: Location,
+    private authService: AuthenticationService
     ) { }
 
   ngOnInit() {
-    this.getPlayer('1');
+    this.getPlayer(this.authService.getUserID().value);
     this.route.params.subscribe(routeParams => {
       this.getQuiz(routeParams.id);
     });
@@ -71,10 +73,11 @@ export class QuizComponent implements OnInit {
 
 
   // get Questions
-  getQuestions(quizID: string): void {
-    this.questionService.getQuestionsByQuiz(quizID)
+  getQuestions(questionIds: string[]): void {
+    this.questionService.getQuestionsByQuiz(questionIds)
       .subscribe(questions => {
         this.questions = questions;
+        questions.forEach(question => console.log(question));
         if (questions.length > 0) {
           this.question = this.questions.find(q => q.position === 1);
           this.setOptions();
@@ -87,7 +90,9 @@ export class QuizComponent implements OnInit {
     this.quizService.getQuiz(id)
       .subscribe(quiz => {
         this.quiz = quiz;
-        this.getQuestions(id);
+        console.log('Quiz is ', this.quiz);
+        console.log('Questions are ', quiz.questions);
+        this.getQuestions(this.quiz.questions.map(question => question.toString()));
       });
   }
 
@@ -132,10 +137,10 @@ export class QuizComponent implements OnInit {
 
   setOptions() {
     const array = [
-      { id: 1, title: this.question.o1r},
-      { id: 2, title: this.question.o2w},
-      { id: 3, title: this.question.o3w},
-      { id: 4, title: this.question.o4w} ];
+      { id: 1, title: this.question.option1},
+      { id: 2, title: this.question.option2},
+      { id: 3, title: this.question.option3},
+      { id: 4, title: this.question.option4} ];
 
     // Shuffle array
     let currentIndex = array.length;

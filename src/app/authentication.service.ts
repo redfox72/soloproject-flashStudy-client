@@ -7,6 +7,7 @@ import { catchError, map, share } from 'rxjs/operators';
 
 interface LoginResult {
   accessToken: string;
+  _id: string;
 }
 
 interface LoginError {
@@ -28,10 +29,12 @@ export class AuthenticationService {
   private loginError: BehaviorSubject<string> = new BehaviorSubject('');
   private registerError: BehaviorSubject<string> = new BehaviorSubject('');
   private isLogin: BehaviorSubject<boolean> = new BehaviorSubject(true);
+  private userID: BehaviorSubject<string> = new BehaviorSubject('');
   private apiUrl = 'http://localhost:4000';
 
-  public logIn(token: string): void {
+  public logIn(token: string, userId: string): void {
     this.token.next(token);
+    this.userID.next(userId);
     this.authenticated.next(true);
     this.loginError.next('');
   }
@@ -61,6 +64,10 @@ export class AuthenticationService {
     return this.isLogin;
   }
 
+  public getUserID() {
+    return this.userID;
+  }
+
   public changeToRegister() {
     console.log('Changing');
     this.isLogin.next(false);
@@ -77,7 +84,7 @@ export class AuthenticationService {
     }).pipe(map(value => {
       if (this.isLoginResult(value)) {
         console.log('Logged in!');
-        this.logIn(value.accessToken);
+        this.logIn(value.accessToken, value._id);
       }
     }), catchError(this.handleError('login')), share()).subscribe(_ => _);
   }
@@ -100,7 +107,7 @@ export class AuthenticationService {
     }).pipe(map(value => {
       if (this.isLoginResult(value)) {
         console.log('Logged in!');
-        this.logIn(value.accessToken);
+        this.logIn(value.accessToken, value._id);
       }
     }), catchError(this.handleError('register')), share()).subscribe(_ => _);
   }
