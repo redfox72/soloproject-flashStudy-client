@@ -1,28 +1,9 @@
-import express from 'express';
-import cors from 'cors';
-import router from './router';
+import quizAppServer from './server';
 import dbConnection from './db';
-import morgan from 'morgan';
-const PORT = process.env.PORT || 3001;
 
-const app = express();
+const PORT = Number(process.env.PORT) || 3001;
+const url = String(process.env.DB_BASE_URL);
+const DB_NAME = String(process.env.DB_NAME);
 
-app.use(cors());
-app.use(express.json());
-app.use(morgan('dev'));
-app.use(router);
-
-app.get('*', (_,res) => {
-  res.status(404).send('Page not found');
-});
-
-app.post('*', (_,res) => {
-  res.status(404).send('Page not found');
-});
-
-( async () => {
-  await dbConnection();
-  app.listen(PORT, () => {
-    console.log(`Server listening at port ${PORT}`);
-  });
-})();
+dbConnection(url,DB_NAME);
+quizAppServer(PORT);

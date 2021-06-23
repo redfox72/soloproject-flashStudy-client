@@ -1,0 +1,15 @@
+[{
+  "_id": "60cbc9c81d53fe201ce1c542",
+  "firstName": "Dhruv",
+  "lastName": "Merchant",
+  "email": "tester@testing.com",
+  "password": "$2b$10$HiOHkUGogg5TtOdyGm3iwO5vQyQWwfOHweO2iMPGlpY17geLEfyWm",
+  "__v": 0
+},{
+  "_id": "60cd24f6855f55016c713174",
+  "email": "john@doe.com",
+  "password": "$2b$10$OXwtIvL5E4mtlzs7GRjS3O8rsmQDy0N3FtWdzn9nVyi4YfxANNNTS",
+  "firstName": "John",
+  "lastName": "Doe",
+  "__v": 0
+}]
