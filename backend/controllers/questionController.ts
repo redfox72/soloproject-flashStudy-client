@@ -3,7 +3,7 @@ import Questions from '../models/questions';
 
 export const getAllQuestions = async (req: Request, res: Response): Promise<void> => {
   try {
-    const allQuestions = await Questions.find();
+    const allQuestions: object[] = await Questions.find();
     res.status(200).send(allQuestions);
   } catch (error) {
     res.status(500).send({ error });
@@ -22,7 +22,8 @@ export const getQuestionById = async (req: Request, res: Response): Promise<void
 export const addQuestion = async (req: Request, res: Response): Promise<void> => {
   try {
     const newQuestion = await Questions.create(req.body); 
-    res.status(201).send(newQuestion._id);
+    const{ _id } = newQuestion as { _id: string };
+    res.status(201).send(_id);
   } catch (error) {
     res.status(500).send({ error });
   }

@@ -1,24 +1,16 @@
-import { connect } from 'mongoose';
-const url = process.env.DB_BASE_URL || '';
-const DB_NAME = process.env.DB_NAME;
+import { connect, Mongoose } from 'mongoose';
 
-const dbConnection = async (): Promise<void> => {
+const dbConnection = async (url: string, DB_NAME: string): Promise<Mongoose | undefined> => {
   try {
-    await connect(url, {
+    const connection = await connect(url, {
       useNewUrlParser: true, 
       useUnifiedTopology: true, 
-      useFindAndModify: false}, 
-      (err) => {
-        if(!err){
-          console.log(`Database ${DB_NAME} is up...`);
-        } else {
-          console.log(`Database is not connected error:${err}`);
-        }
-      }
-    );
-    } catch (error) {
-      console.log(error);
-    }
+      useFindAndModify: false});
+    console.log(`Successfully connected to the ${DB_NAME} ...`)
+    return connection;
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 export default dbConnection;

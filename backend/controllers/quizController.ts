@@ -21,8 +21,9 @@ export const getQuizById = async (req: Request,res: Response): Promise<void> => 
 
 export const addQuiz = async (req: Request, res: Response): Promise<void> => {
   try {
-    const newQuiz = await Quizzes.create(req.body); 
-    res.status(201).send(newQuiz._id);
+    const newQuiz = await Quizzes.create(req.body);
+    const {_id} = newQuiz as { _id: string }; 
+    res.status(201).send(_id);
   } catch (error) {
     res.status(500).send({ error });
   }
