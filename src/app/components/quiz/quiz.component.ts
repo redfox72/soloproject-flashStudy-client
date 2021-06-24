@@ -77,7 +77,6 @@ export class QuizComponent implements OnInit {
     this.questionService.getQuestionsByQuiz(questionIds)
       .subscribe(questions => {
         this.questions = questions;
-        questions.forEach(question => console.log(question));
         if (questions.length > 0) {
           this.question = this.questions.find(q => q.position === 1);
           this.setOptions();
@@ -90,8 +89,6 @@ export class QuizComponent implements OnInit {
     this.quizService.getQuiz(id)
       .subscribe(quiz => {
         this.quiz = quiz;
-        console.log('Quiz is ', this.quiz);
-        console.log('Questions are ', quiz.questions);
         this.getQuestions(this.quiz.questions.map(question => question.toString()));
       });
   }
@@ -125,7 +122,6 @@ export class QuizComponent implements OnInit {
     } else {
       if (this.success) {
         if (!this.player.completed.includes(this.quiz._id)) {
-          console.log('Updating score');
           this.player.completed.push(this.quiz._id);
           this.updateScore();
         }

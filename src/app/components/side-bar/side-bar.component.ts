@@ -5,7 +5,7 @@ import { AuthenticationService } from 'src/app/authentication.service';
 import { Category } from '../../model/category';
 import { Quiz } from '../../model/quiz';
 import { UiServiceService } from '../../services/ui-service.service';
-
+import { Location } from '@angular/common';
 
 
 @Component({
@@ -25,7 +25,8 @@ export class SideBarComponent implements OnInit {
   constructor(
     private router: Router,
     private uiService: UiServiceService,
-    private authService: AuthenticationService
+    private authService: AuthenticationService,
+    private location: Location
   ) { }
 
   ngOnInit(): void {
@@ -61,24 +62,26 @@ export class SideBarComponent implements OnInit {
     const parsedUrl = this.router.parseUrl(this.router.url);
     let path: string;
     let id: string;
-    console.log(this.categories);
-    console.log(this.quizzes);
-    if (parsedUrl.root.children.primary) {
+    if (parsedUrl.root.children.primary && parsedUrl.root.children.primary.segments[0].path !== 'login') {
       path = parsedUrl.root.children.primary.segments[0].path;
       id = parsedUrl.root.children.primary.segments[1].path;
+      this.location.replaceState(`/${path}/${id}`);
     }
     else {
-      this.router.navigate(['category', this.categories[0]._id]);
+      if (this.categories) {
+        this.router.navigate(['category', this.categories[0]._id]);
+      } else {
+        return;
+      }
     }
     if (path === 'category') {
       this.setSelectedCategory(id);
     } else if (path === 'quiz') {
-      console.log(id);
-      console.log('Selected category is ', this.selectedCategory);
-      console.log(this.quizzes);
       if (this.quizzes) {
-        const catID = this.quizzes.find(q => q.categoryId === id).categoryId;
-        this.setSelectedCategory(catID);
+        const quiz = this.quizzes.find(q => q.categoryId === id);
+        if (quiz) {
+          this.setSelectedCategory(quiz.categoryId);
+        }
       }
     }
   }

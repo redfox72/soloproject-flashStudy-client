@@ -69,7 +69,6 @@ export class AuthenticationService {
   }
 
   public changeToRegister() {
-    console.log('Changing');
     this.isLogin.next(false);
   }
 
@@ -78,22 +77,18 @@ export class AuthenticationService {
   }
 
   attemptLogin(email: string, password: string): void {
-    console.log('Attempting login');
     this.httpClient.post<LoginError | LoginResult>(`${this.apiUrl}/login`, {
       email, password
     }).pipe(map(value => {
       if (this.isLoginResult(value)) {
-        console.log('Logged in!');
         this.logIn(value.accessToken, value._id);
       }
     }), catchError(this.handleError('login')), share()).subscribe(_ => _);
   }
 
   attemptLogout() {
-    console.log('Attempting logout');
     // this.httpClient.post<LoginError | LoginResult>(`${this.apiUrl}/logout`).pipe(map(value => {
     //   if (this.isLoginResult(value)) {
-    //     console.log('Logged in!');
     //     this.logIn(value.accessToken);
     //   }
     // }), catchError(this.handleError('login')), share()).subscribe(_ => _);
@@ -101,12 +96,10 @@ export class AuthenticationService {
   }
 
   attemptRegister(email: string, password: string, firstName: string, lastName: string) {
-    console.log('Attempting register');
     this.httpClient.post<LoginError | LoginResult>(`${this.apiUrl}/register`, {
       email, password, firstName, lastName
     }).pipe(map(value => {
       if (this.isLoginResult(value)) {
-        console.log('Logged in!');
         this.logIn(value.accessToken, value._id);
       }
     }), catchError(this.handleError('register')), share()).subscribe(_ => _);

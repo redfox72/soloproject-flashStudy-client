@@ -50,7 +50,6 @@ export class CategoryComponent implements OnInit {
 
   // Get player
   getPlayer(id: string): void {
-    console.log('Getting players by ', id);
     this.playerService.getPlayer(id)
       .subscribe(player => {
         this.player = player;
@@ -60,11 +59,10 @@ export class CategoryComponent implements OnInit {
 
   // Get quizzes
   getQuizzes(id: string): void {
-    console.log('Getting quizzes by ', id);
     this.quizService.getQuizzesByCategory(id)
       .subscribe(quizzes => {
-        console.log('quizzes are ', quizzes);
         this.quizzes = quizzes;
+        this.updateProgress();
       });
   }
 
@@ -79,6 +77,8 @@ export class CategoryComponent implements OnInit {
 
   // Calculate progress
   updateProgress(): void{
-    this.progress = (this.quizzes.filter(q => this.player.completed.includes(q._id)).length / this.quizzes.length) * 100;
+    if (this.quizzes) {
+      this.progress = (this.quizzes.filter(q => this.player.completed.includes(q._id)).length / this.quizzes.length) * 100;
+    }
   }
 }
