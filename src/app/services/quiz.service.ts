@@ -26,7 +26,6 @@ export class QuizService {
 
 
   getQuizzes(): Observable<Quiz[]> {
-    console.log('**** Fetching quizzess ****');
     this.observableCache = this.http.get<Quiz[]>(this.url, {
       headers: new HttpHeaders({Authorization: `Bearer ${this.authService.getToken().value}`})
     }).pipe(
@@ -56,8 +55,6 @@ export class QuizService {
 
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
-      console.log(error);
-      console.log(`${operation} failed: ${error.message}`);
       return of(result as T);
     };
   }

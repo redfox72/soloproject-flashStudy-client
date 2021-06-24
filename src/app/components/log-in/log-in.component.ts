@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthenticationService } from 'src/app/authentication.service';
 import { FormControl } from '@angular/forms';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-log-in',
@@ -11,6 +12,7 @@ export class LogInComponent implements OnInit {
 
   constructor(
     private authService: AuthenticationService,
+    private location: Location
   ) { }
 
   email = new FormControl('');

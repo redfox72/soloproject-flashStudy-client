@@ -1,6 +1,6 @@
 
 
-<div *ngIf="categories" class="bg-light border-right" id="sidebar-wrapper">
+<div *ngIf="categories && selectedCategory" class="bg-light border-right" id="sidebar-wrapper">
 
   <a [routerLink]="['/category', categories[0]._id ]">
     <div class="sidebar-heading"> Flash Trivia</div>
